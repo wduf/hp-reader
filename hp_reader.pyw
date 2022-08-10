@@ -12,7 +12,6 @@ def fromClipboard():
 		img = ImageGrab.grabclipboard()
 	except:
 		print("empty clipboard. please save a screenshot to your clipboard.")
-
 	return img
 
 def getPixelValues(img):
@@ -32,7 +31,6 @@ def recolor(pixels):  # change pixel rgb values (really only the r value) so tha
 			# this is for debugging
 			p[1] = 0
 			p[2] = 0
-	
 	return pixels
 
 def printRGB(pixels):  # print rgb values for each pixel in image
@@ -48,7 +46,6 @@ def calculateHP(pixels):
 	width = 0  # width of hp border
 	hp = 0  # index of beginning of hp, need this because color smoothing breaks this
 	missing = 0  # index of beginning of missing hp
-
 	while(bar[offset][0] != 255):  # find offset of border
 		offset += 1
 	while(bar[offset + width][0] == 255):  # find offset of hp
@@ -57,19 +54,16 @@ def calculateHP(pixels):
 		hp += 1
 	while(bar[offset + width + hp + missing][0] == 0):  # stop at end border of hp bar (equals zero because of color smoothing)
 		missing += 1
-
 	return (hp / (hp + missing))
 
 def production():
 	pct = 0
 	img = fromClipboard()
-
 	try:
 		pixels = getPixelValues(img)
-		new = recolor(pixels)
+		new = recolor(pixels.copy())
 		pct = calculateHP(new)
 		pct = (int(pct * 10000) / 100)
-
 		return f"{pct}%"	
 	except:
 		return "error. try again."
