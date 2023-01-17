@@ -1,11 +1,8 @@
 # .pyw so it opens without the console
 
-# imports
 import tkinter as tk
 from numpy import asarray
 from PIL import ImageGrab
-
-# functions
 
 def fromClipboard():
 	try:
@@ -20,8 +17,8 @@ def getPixelValues(img):
 def recolor(pixels):  # change pixel rgb values (really only the r value) so that i can read them moving forward
 	for row in pixels:
 		for p in row:
-			border = ((p[0] > 180) and (p[1] > 180) and (p[2] > 180))
-			empty = ((p[0] < 120) and (p[1] < 120) and (p[2] < 120))
+			border = ((p[0] > 180) and (p[1] > 180) and (p[2] > 180))  # hp bar border
+			empty = ((p[0] < 120) and (p[1] < 120) and (p[2] < 120))  # empty part of bar
 			if(border):
 				p[0] = 255  # outer (white) border of hp bar
 			elif(empty):
@@ -69,8 +66,7 @@ def production():
 		return "error. try again."
 
 def main():
-	R = production()
-	pct.configure(text = R)
+	pct.configure(text = production())
 
 # gui
 
@@ -84,7 +80,5 @@ button.pack()
 
 pct = tk.Label(window, font = "Arial 48")
 pct.pack()
-
-# execute
 
 window.mainloop()
